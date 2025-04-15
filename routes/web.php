@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BinController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +35,14 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
+    Route::resource('bins', BinController::class);
+    Route::resource('locations', LocationController::class);
+    Route::get('messages/list', [MessageController::class, 'list'])->name('messages.list');
+    Route::resource('messages', MessageController::class);
+    Route::resource('settings', SettingsController::class);
+    Route::get('/help', function () {
+        return view('help');
+    })->name('help');
 });
 
 require __DIR__.'/auth.php';

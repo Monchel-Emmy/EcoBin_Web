@@ -9,32 +9,35 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('description')->nullable();
+            $table->string('name', 50)->unique();
             $table->timestamps();
         });
 
         // Insert default roles
         DB::table('roles')->insert([
-            ['name' => 'admin', 'description' => 'Administrator with full access'],
-            ['name' => 'user', 'description' => 'Regular user with limited access'],
+            [
+                'name' => 'Admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'User',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('roles');
     }
-};
+}; 

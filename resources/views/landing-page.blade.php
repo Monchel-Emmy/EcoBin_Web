@@ -46,13 +46,13 @@
         footer {
             background-color: #f1f1f1;
             padding: 10px;
-            position: fixed;
+            position: absolute;
             bottom: 0;
             width: 100%;
         }
     </style>
 </head>
-<body>
+<body style="background-color: #BCCEF1"> 
     <header>
         <h1>Welcome to Ecobin Admin</h1>
         <p>Manage your bins, users, and notifications efficiently.</p>

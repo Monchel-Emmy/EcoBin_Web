@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-4">
+<div class="container mx-auto mt-4" style="background-color: #BCCEF1">
     <h1 class="text-2xl font-bold mb-4">Users</h1>
     <a href="{{ route('users.create') }}" class="btn btn-primary mb-4">Add User</a>
     <table class="table-auto w-full border-collapse border border-gray-300">
