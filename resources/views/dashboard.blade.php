@@ -1,5 +1,5 @@
 @extends('layouts.app')
-        
+    
 @section('content')
     <div class="py-12 " style="background-color: #BCCEF1">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -7,7 +7,7 @@
                 <div class="p-6 text-gray-900">
                 <h1 class="text-2xl font-semibold mb-4">Dashboard</h1>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <!-- Stats Card 1 -->
                     <div class="bg-white p-4 rounded-lg shadow">
                         <div class="flex items-center">

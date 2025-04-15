@@ -9,10 +9,10 @@
             </a>
         </div>
     </x-slot>
-
     <div class="py-12">
-        <div class="max-w-full mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="max-w-full mx-auto sm:px-6 lg:px-8" style="background-color: #BCCEF1; padding: 10px;">
+            
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg"style=" padding: 30px;"><b>inbox</b> 
                 <div class="p-8 text-gray-900">
                     <div class="space-y-6">
                         @foreach($messages as $message)

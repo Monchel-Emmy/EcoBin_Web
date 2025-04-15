@@ -9,28 +9,33 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #FFBC0F;
+            background-color: #BCCEF1;
             color: #333;
         }
 
         header {
             /* background-color: #FFBC0F; */
             color: white;
-            padding: 20px;
+            padding: 7px;
             text-align: center;
+            display: flex;
+            justify-content: space-between;
         }
 
         main {
             padding: 20px;
-            text-align: center;
+            /* text-align: center; */
             background-color: #51C8BC;
-            margin: 30px;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-top: 4px;
             border-radius: 26px;
         }
 
         section {
             margin: 20px 0;
-            
+            text-align: center;
 
         }
 
@@ -52,11 +57,13 @@
         }
 
         footer {
-            background-color: #333;
+            background-color: #51C8BC;
             color: white;
-            text-align: center;
-            padding: 10px;
+            /* text-align: center; */
+            padding-top: 100px;
+            padding-left: 400px;
             /* position: fixed; */
+            margin-left: 150px;
             bottom: 0;
             width: 100%;
         }
@@ -85,7 +92,7 @@
             background-color: #51C8BC;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
+            padding: 10px;
             width: 80%;
             max-width: 600px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -94,14 +101,17 @@
 </head>
 <body>
     <header>
+    <img src="{{ asset('ECO.png') }}" alt="Ecobin Logo" style="width: 65px; height: 65px;">
+    <div>
     <a href="{{ route('register') }}" class="btn">Register</a>
     <a href="{{ route('login') }}" class="btn">Login</a>
+    </div>
     </header>
 
     <main>
         <div class="part1">
-            <h2> Ecobin with Ai  </h2>
-            <p>EcoBin AI – Smart Sorting, Cleaner Future! 🚮♻️<br><br>
+            <h2 style="color: #4CAF4F;"> Ecobin with Ai  </h2>
+            <p style="font-family: 'Times New Roman', Times, serif ">EcoBin AI – Smart Sorting, Cleaner Future! 🚮♻️<br><br>
              The EcoBin AI Project is a smart waste management system that uses Artificial Intelligence (AI) and the Internet of Things (IoT) to create intelligent bins. These bins can automatically identify, sort, and manage different types of waste. The project helps solve problems like overflowing bins, poor waste sorting, and high collection costs. With features like automated sorting, real-time monitoring, touchless operation, and data tracking, EcoBin AI improves recycling and makes waste management more efficient and sustainable.</p>
        </br> <a href="{{ route('register') }}" class="btn">Register</a> </div>
     
@@ -140,10 +150,11 @@
             </div>
         </section>
 
+    <footer>
+        <p>Copyright &copy 2025 Ecobin<br> All rights reserved.</p>
+        <img src="{{ asset('facebook-.png') }}" alt="Ecobin Logo" style="width: 200px; height: 100px;">
+    </footer>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Ecobin. All rights reserved.</p>
-    </footer>
 </body>
 </html>
