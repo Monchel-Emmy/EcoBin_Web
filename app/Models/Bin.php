@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\TracksActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Bin extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksActivity;
 
     protected $fillable = [
         'bin_id',
@@ -18,7 +19,7 @@ class Bin extends Model
 
     protected $casts = [
         'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
     public function location()
@@ -29,6 +30,11 @@ class Bin extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 
     public function levels()

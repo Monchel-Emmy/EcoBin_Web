@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
 {
     public function index()
     {
-        return view('settings.index');
+        $user = Auth::user();
+        return view('settings.index', compact('user'));
     }
 
     public function create()
@@ -34,8 +38,29 @@ class SettingsController extends Controller
 
     public function update(Request $request, $id)
     {
-        // TODO: Implement settings update logic
-        return redirect()->route('settings.index')->with('success', 'Settings updated successfully');
+        $user = Auth::user();
+        
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'bio' => ['nullable', 'string', 'max:255'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'current_password' => ['nullable', 'required_with:new_password', 'current_password'],
+            'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ]);
+        
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->bio = $request->bio;
+        $user->location = $request->location;
+        
+        if ($request->filled('new_password')) {
+            $user->password = Hash::make($request->new_password);
+        }
+        
+        $user->save();
+        
+        return redirect()->route('settings.index')->with('success', 'Profile updated successfully');
     }
 
     public function destroy($id)

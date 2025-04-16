@@ -4,9 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Settings') }}
             </h2>
-            <a href="{{ route('settings.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                {{ __('Add New Setting') }}
-            </a>
         </div>
     </x-slot>
 
@@ -20,42 +17,98 @@
                         </div>
                     @endif
 
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Key</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse($settings ?? [] as $setting)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $setting->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $setting->key }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $setting->value }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $setting->description }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('settings.show', $setting) }}" class="text-blue-600 hover:text-blue-900 mr-3">View</a>
-                                        <a href="{{ route('settings.edit', $setting) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                        <form action="{{ route('settings.destroy', $setting) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this setting?')">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
-                                        No settings found. Click "Add New Setting" to create one.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="flex flex-col items-center">
+                        <h1 class="text-4xl font-normal text-[#3569D2] mb-8">Update User Profile</h1>
+                        
+                        <div class="w-full max-w-md">
+                            <form method="POST" action="{{ route('settings.update', 1) }}" class="space-y-6">
+                                @csrf
+                                @method('PUT')
+                                
+                                <!-- Name -->
+                                <div class="mb-4">
+                                    <label for="name" class="block text-sm font-bold text-[#283C46] mb-1">Name required</label>
+                                    <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" 
+                                        class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                    @error('name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                
+                                <!-- Bio -->
+                                <div class="mb-4">
+                                    <label for="bio" class="block text-sm font-bold text-[#283C46] mb-1">Short bio or current status</label>
+                                    <input type="text" id="bio" name="bio" value="{{ old('bio', $user->bio ?? '') }}" 
+                                        class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    @error('bio')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                
+                                <!-- Location -->
+                                <div class="mb-4">
+                                    <label for="location" class="block text-sm font-bold text-[#283C46] mb-1">Location</label>
+                                    <input type="text" id="location" name="location" value="{{ old('location', $user->location ?? '') }}" 
+                                        class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    @error('location')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                
+                                <!-- Email -->
+                                <div class="mb-4">
+                                    <label for="email" class="block text-sm font-bold text-[#283C46] mb-1">Email address required</label>
+                                    <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" 
+                                        class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                    @error('email')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                
+                                <!-- Login Info Section -->
+                                <div class="mb-6">
+                                    <h3 class="text-sm font-bold text-[#283C46] mb-1">Login info</h3>
+                                    <p class="text-sm text-[#283C46] mb-4">You log in with a password. Set up 2FA or change your login info here.</p>
+                                    
+                                    <!-- Current Password -->
+                                    <div class="mb-4">
+                                        <label for="current_password" class="block text-sm font-bold text-[#283C46] mb-1">Current Password</label>
+                                        <input type="password" id="current_password" name="current_password" 
+                                            class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        @error('current_password')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    
+                                    <!-- New Password -->
+                                    <div class="mb-4">
+                                        <label for="new_password" class="block text-sm font-bold text-[#283C46] mb-1">New Password</label>
+                                        <input type="password" id="new_password" name="new_password" 
+                                            class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        @error('new_password')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    
+                                    <!-- Confirm Password -->
+                                    <div class="mb-4">
+                                        <label for="new_password_confirmation" class="block text-sm font-bold text-[#283C46] mb-1">Confirm New Password</label>
+                                        <input type="password" id="new_password_confirmation" name="new_password_confirmation" 
+                                            class="w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                </div>
+                                
+                                <!-- Update Button -->
+                                <div class="flex justify-center">
+                                    <button type="submit" class="bg-[#D9D9D9] text-black font-normal py-2 px-6 rounded-md hover:bg-gray-300 transition duration-300">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

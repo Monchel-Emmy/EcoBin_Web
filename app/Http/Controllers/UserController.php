@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Bin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -138,8 +140,26 @@ class UserController extends Controller
                 ->with('error', 'You cannot delete your own account.');
         }
 
-        $user->delete();
-
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        try {
+            // Start a transaction
+            DB::beginTransaction();
+            
+            // Set user_id to NULL in all bins assigned to this user
+            Bin::where('user_id', $user->id)->update(['user_id' => null]);
+            
+            // Delete the user
+            $user->delete();
+            
+            // Commit the transaction
+            DB::commit();
+            
+            return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        } catch (\Exception $e) {
+            // Rollback the transaction if there's an error
+            DB::rollBack();
+            
+            return redirect()->route('users.index')
+                ->with('error', 'Error deleting user: ' . $e->getMessage());
+        }
     }
 }

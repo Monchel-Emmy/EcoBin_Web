@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Models\Bin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LocationController extends Controller
 {
@@ -68,7 +70,26 @@ class LocationController extends Controller
 
     public function destroy(Location $location)
     {
-        $location->delete();
-        return redirect()->route('locations.index')->with('success', 'Location deleted successfully');
+        try {
+            // Start a transaction
+            DB::beginTransaction();
+            
+            // Delete all bins assigned to this location
+            Bin::where('location_id', $location->id)->delete();
+            
+            // Delete the location
+            $location->delete();
+            
+            // Commit the transaction
+            DB::commit();
+            
+            return redirect()->route('locations.index')->with('success', 'Location and all associated bins deleted successfully.');
+        } catch (\Exception $e) {
+            // Rollback the transaction if there's an error
+            DB::rollBack();
+            
+            return redirect()->route('locations.index')
+                ->with('error', 'Error deleting location: ' . $e->getMessage());
+        }
     }
 } 

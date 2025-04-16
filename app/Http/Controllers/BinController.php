@@ -45,29 +45,38 @@ class BinController extends Controller
 
             DB::beginTransaction();
 
-            // Create the bin
-            $bin = Bin::create([
-                'bin_id' => $validated['bin_id'],
-                'location_id' => $validated['location_id'],
-                'user_id' => $validated['user_id'],
-                'status' => $validated['status'],
-            ]);
+            try {
+                // Create the bin
+                $bin = Bin::create([
+                    'bin_id' => $validated['bin_id'],
+                    'location_id' => $validated['location_id'],
+                    'user_id' => $validated['user_id'],
+                    'status' => $validated['status'],
+                ]);
 
-            Log::info('Bin created:', $bin->toArray());
+                Log::info('Bin created successfully:', $bin->toArray());
 
-            // Create the initial bin level record
-            $binLevel = BinLevel::create([
-                'bin_id' => $bin->id,
-                'date' => now()->toDateString(),
-                'plastic_level' => $validated['plastic_level'],
-                'paper_level' => $validated['paper_level'],
-                'metal_level' => $validated['metal_level'],
-            ]);
+                // Create the initial bin level record
+                $binLevel = BinLevel::create([
+                    'bin_id' => $bin->id,  // Use the auto-incrementing id
+                    'date' => now()->toDateString(),
+                    'plastic_level' => $validated['plastic_level'],
+                    'paper_level' => $validated['paper_level'],
+                    'metal_level' => $validated['metal_level'],
+                ]);
 
-            Log::info('Bin level created:', $binLevel->toArray());
+                Log::info('Bin level created successfully:', $binLevel->toArray());
 
-            DB::commit();
-            return redirect()->route('bins.show', $bin)->with('success', 'Bin created successfully.');
+                DB::commit();
+                return redirect()->route('bins.show', $bin)->with('success', 'Bin created successfully.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Error in transaction:', [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                throw $e;
+            }
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Validation error:', [
                 'errors' => $e->errors(),
@@ -80,7 +89,6 @@ class BinController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'request_data' => $request->all()
             ]);
-            DB::rollBack();
             return back()->with('error', 'Error creating bin: ' . $e->getMessage())->withInput();
         }
     }

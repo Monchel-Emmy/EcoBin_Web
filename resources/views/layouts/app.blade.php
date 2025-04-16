@@ -38,7 +38,7 @@
         <!-- Main content area -->
         <div id="mainContent" class="pl-64 pr-4  min-h-screen flex flex-col w-full">
             <!-- Top Navigation -->
-            <div class="sticky top-0 z-30 shadow" style="background-color: #BCCEF1; margin-top: 20px; margin-bottom: 20px; margin-right: 20px;">
+            <div class="sticky top-0 z-30 " style="background-color: #BCCEF1; margin-top: 20px; margin-bottom: 20px; margin-right: 20px;">
                 <div class="px-3 sm:px-8 lg:px-10">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">

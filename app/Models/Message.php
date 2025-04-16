@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\TracksActivity;
 
 class Message extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksActivity;
 
     /**
      * The attributes that are mass assignable.
