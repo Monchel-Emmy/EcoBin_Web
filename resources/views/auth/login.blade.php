@@ -41,6 +41,12 @@ img{
     <div class="frm" >
     <img src="ECO.png" alt="no image" srcset="">
     <form method="POST" action="{{ route('login') }}">
+    @if(session('success'))
+    <div class="alert alert-success" style="background-color:rgba(28, 84, 223, 0.44); color: white; width: 90%; padding-right: 10px; padding: 5px; border-radius: 10px;">
+        {{ session('success') }}
+    </div>
+    @endif
+
        <div class="login">LOGIN</div>
         @csrf
 
@@ -63,9 +69,9 @@ img{
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
-        <div class="flex items-center justify-end mt-4" style="background-color: #A2B3B8; color: white;width: 30%; padding-right: 10px; padding: 5px;">
+        <div class="flex items-center justify-end mt-4" style="background-color: #A2B3B8; color: black;width: 30%;height: 30px; padding-right: 10px; padding: 5px;">
     @if (Route::has('password.request'))
-        <a class="none text-sm text-white hover:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+        <a class="none text-sm text-black hover:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
             {{ __('Forgot password?') }}
         </a>
     @endif

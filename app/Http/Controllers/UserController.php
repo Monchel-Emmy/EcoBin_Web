@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        $users = User::with('role')->get();
+        $users = User::latest()->paginate(10);
         return view('users.index', compact('users'));
     }
 
@@ -44,8 +44,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        $roles = Role::all();
-        return view('users.form', compact('roles'));
+        return view('users.create');
     }
 
     /**
@@ -56,27 +55,22 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'role_id' => ['required', 'integer', Rule::exists('roles', 'id')],
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|in:admin,user',
         ]);
-
-        // Generate a random password
-        $password = Str::random(12);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($password),
-            'role_id' => $request->role_id,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
+            'is_approved' => true, // Admin-created users are automatically approved
         ]);
 
-        // TODO: Send email to user with their password
-        // Mail::to($user->email)->send(new WelcomeUser($user, $password));
-
-        return redirect()->route('users.index')
-            ->with('success', 'User created successfully. Temporary password: ' . $password);
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -161,5 +155,11 @@ class UserController extends Controller
             return redirect()->route('users.index')
                 ->with('error', 'Error deleting user: ' . $e->getMessage());
         }
+    }
+
+    public function approve(User $user)
+    {
+        $user->update(['is_approved' => true]);
+        return redirect()->route('users.index')->with('success', 'User has been approved successfully.');
     }
 }

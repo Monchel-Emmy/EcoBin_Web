@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             LocationSeeder::class,
             BinSeeder::class,
             ActivitySeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }

@@ -4,9 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Bins') }}
             </h2>
+            @if(auth()->user()->isAdmin())
             <a href="{{ route('bins.create') }}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">
                 {{ __('Add New Bin') }}
             </a>
+            @endif
         </div>
     </x-slot>
     <div class="py-12">
@@ -46,12 +48,14 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('bins.show', $bin->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">View</a>
+                                        @if(auth()->user()->isAdmin())
                                         <a href="{{ route('bins.edit', $bin->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                                         <form action="{{ route('bins.destroy', $bin->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this bin?')">Delete</button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
