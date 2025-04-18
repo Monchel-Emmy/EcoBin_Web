@@ -63,8 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('messages/list', [MessageController::class, 'list'])->name('messages.list');
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/view/{message}', [MessageController::class, 'show'])->name('messages.show');
-     // Settings
-     Route::resource('settings', SettingsController::class);
+     
     // Admin only routes
     Route::middleware(['role:admin'])->group(function () {
         // Bins

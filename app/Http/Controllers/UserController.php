@@ -121,7 +121,8 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         // Prevent deleting the last admin
-        if ($user->role->name === 'admin' && User::whereHas('role', function($query) {
+        if ($user->role === 'admin' && User::whereHas('role', function($query) {
+
             $query->where('name', 'admin');
         })->count() <= 1) {
             return redirect()->route('users.index')

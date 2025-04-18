@@ -12,7 +12,13 @@ class SettingsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('settings.index', compact('user'));
+        // return view('settings.index', compact('user'));
+        if ($user->role === 'admin') {
+            return view('settings.index', compact('user'));
+        } else {
+            return view('settings.user');
+        }
+ 
     }
 
     public function create()
