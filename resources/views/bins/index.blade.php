@@ -35,7 +35,7 @@
                             @forelse($bins ?? [] as $bin)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ $bin->bin_id }}
+                                        {{ is_object($bin) && isset($bin->bin_id) ? $bin->bin_id : 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $bin->location->name }} - {{ $bin->location->address }}

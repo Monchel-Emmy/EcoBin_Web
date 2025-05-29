@@ -5,9 +5,9 @@
                 {{ __('Bin Details') }}
             </h2>
             <div class="flex space-x-2">
-                <a href="{{ route('bins.edit', ['bin' => $bin->id]) }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+             @if(Auth::user()->isAdmin())   <a href="{{ route('bins.edit', ['bin' => $bin->id]) }}" class="bg-indigo-500 hover:bg-indigo-700 text-blue font-bold py-2 px-4 rounded">
                     {{ __('Edit Bin') }}
-                </a>
+                </a> @endif
                 <a href="{{ route('bins.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     {{ __('Back to Bins') }}
                 </a>

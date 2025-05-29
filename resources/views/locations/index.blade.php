@@ -5,7 +5,7 @@
                 {{ __('Locations') }}
             </h2>
             @if(auth()->user()->isAdmin())
-            <a href="{{ route('locations.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <a href="{{ route('locations.create') }}" class="bg-blue-500 hover:bg-blue-700 text-blue font-bold py-2 px-4 rounded">
                 {{ __('Add New Location') }}
             </a>
             @endif
@@ -42,9 +42,9 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse($locations ?? [] as $location)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $location->id }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $location->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $location->address }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ is_object($location) ? $location->id : '' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ is_object($location) ? $location->name : '' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ is_object($location) ? $location->address : '' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $location->status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                                 {{ $location->status ? 'Active' : 'Inactive' }}

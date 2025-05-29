@@ -4,9 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Messages') }}
             </h2>
+            @if(Auth::user()->isAdmin())
             <a href="{{ route('messages.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
                 Table View
             </a>
+            @endif
         </div>
     </x-slot>
     <div class="py-12">

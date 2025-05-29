@@ -63,7 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('messages/list', [MessageController::class, 'list'])->name('messages.list');
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/view/{message}', [MessageController::class, 'show'])->name('messages.show');
-     
+    Route::get('/messages/create', [MessageController::class, 'create'])->name('messages.create');
+    Route::get('/messages/edit/{message}', [MessageController::class, 'edit'])->name('messages.edit');
     // Admin only routes
     Route::middleware(['role:admin'])->group(function () {
         // Bins
@@ -98,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
         
         // Settings
         Route::resource('settings', SettingsController::class);
+        Route::resource('messages', MessageController::class,);
     });
 });
 

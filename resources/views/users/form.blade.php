@@ -1,8 +1,45 @@
 @extends('layouts.app')
+<style>
+  .container {
+    max-width: 800px;         
+    margin: 30px auto;       
+    padding: 20px;              
+    background-color: #f9f9f9;  
+    border-radius: 10px;        
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+}
+.title{
+    margin-left: 300px;
+    color: blue;
+
+ }  
+form{
+    padding: 20px;
+}
+.form-group{
+    padding: 6px;
+}
+
+    .form-label {
+        font-weight: 500;
+    }
+    button{
+        background-color: red;
+    }
+
+    .btn-success {
+        font-size: 1rem;
+        font-weight: bold;
+        background-color: green;
+        margin: 5px;
+        width: 70px;
+        height: 30px;
+    }
+</style>
 
 @section('content')
 <div class="container">
-    <h1>{{ isset($user) ? 'Edit User' : 'Add User' }}</h1>
+    <h1 class="title">{{ isset($user) ? 'Edit User' : 'Add User' }}</h1>
     <form action="{{ isset($user) ? route('users.update', $user->id) : route('users.store') }}" method="POST">
         @csrf
         @if (isset($user))

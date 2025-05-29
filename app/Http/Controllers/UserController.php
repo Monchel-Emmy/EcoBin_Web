@@ -60,6 +60,8 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|in:admin,user',
+            // 'role_id' => ['required', 'integer', Rule::exists('roles', 'id')],
+
         ]);
 
         $user = User::create([
@@ -67,6 +69,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
+            // 'role_id' => $validated['role_id'],
             'is_approved' => true, // Admin-created users are automatically approved
         ]);
 

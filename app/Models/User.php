@@ -8,8 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\TracksActivity;
-
-class User extends Authenticatable
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, TracksActivity;
 
@@ -58,9 +58,24 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
-
+  public function isUser()
+    {
+        return $this->role === 'user';
+    }
     public function isApproved()
     {
         return $this->is_approved;
     }
+
+    protected static function booted()
+{
+    static::saving(function ($user) {
+        $user->role = match ($user->role_id) {
+            1 => 'admin',
+            2 => 'user',
+            default => $user->role
+        };
+    });
+}
+
 }

@@ -37,12 +37,16 @@
                     
                     <h2>User Guide</h2>
                     <p>For a comprehensive guide on how to use the EcoBin Admin platform, please download our user manual:</p>
-                    <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-green-700 hover:bg-green-800 shadow-md" style="background-color: #008000;margin-top: 10px;">
+                    <button onclick="window.print()" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-blue-600 hover:bg-blue-700 shadow-md mt-4">
+                     <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-green-700 hover:bg-green-800 shadow-md" style="background-color: #008000;margin-top: 10px;">
                         <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
                         Download User Manual
                     </a>
+</button>
+
+               
                 </div>
             </div>
         </div>
